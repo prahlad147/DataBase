@@ -687,14 +687,273 @@ Rule 12: Non-Subversion Rule
 
 
 
+RELATIONAL DATA MODEL:
+
+-> Relational data model is the primary data model, which is used widely around the world for data storage and processing. 
+-> This model is simple and it has all the properties and capabilities required to process data with storage efficiency.
+
+
+
+Concepts:
+
+1. Tables: 
+-> In relational data model, relations are saved in the format of Tables. 
+-> This format stores the relation among entities. 
+-> A table has rows and columns, where rows represent records and columns represent the attributes.
+
+
+2. Tuple: 
+-> A single row of a table, which contains a single record for that relation is called a tuple.
+
+
+3. Relation instance: 
+-> A finite set of tuples in the relational database system represents relation instance. 
+-> Relation instances do not have duplicate tuples.
+
+
+4. Relation schema: 
+-> A relation schema describes the relation name (table name), attributes, and their names.
+
+
+5. Relation key: 
+-> Each row has one or more attributes, known as relation key,which can identify the row in the relation (table) uniquely.
+
+
+6. Attribute domain: 
+-> Every attribute has some predefined value scope, known as attribute domain.
+
+
+
+
+Constraints:
+
+-> Every relation has some conditions that must hold for it to be a valid relation. 
+-> These conditions are called Relational Integrity Constraints. 
+
+
+There are three main integrity constraints:
+ Key constraints
+ Domain constraints
+ Referential integrity constraints
+
+
+
+1. Key Constraints
+-> There must be at least one minimal subset of attributes in the relation, which can identify a tuple uniquely. 
+-> This minimal subset of attributes is called key for that relation. 
+-> If there are more than one such minimal subsets, these are called candidate keys.
+
+
+Key constraints force that:
+ in a relation with a key attribute, no two tuples can have identical valuesfor key attributes.
+ a key attribute cannot have NULL values.
+
+Notes:
+-> Key constraints are also referred to as Entity Constraints.
+
+
+
+Domain Constraints:
+
+-> Attributes have specific values in real-world scenario. 
+-> For example, age can only be a positive integer. 
+-> The same constraints have been tried to employ on the attributes of a relation. 
+-> Every attribute is bound to have a specific range of values. 
+-> For example, age cannot be less than zero and telephone numbers cannot contain a digit outside 0-9.
+
+
+Referential Integrity Constraints:
+
+-> Referential integrity constraints work on the concept of Foreign Keys. 
+-> A foreign key is a key attribute of a relation that can be referred in other relation. 
+-> Referential integrity constraint states that if a relation refers to a key attribute of a different or same relation, then that key element must exist.
+
+
+
+RELATIONAL ALGEBRA:
+
+-> Relational database systems are expected to be equipped with a query language that can assist its users to query the database instances. 
+
+-> There are two kinds of query languages: relational algebra and relational calculus.
+
+
+
+Relational Algebra:
+
+-> Relational algebra is a procedural query language, which takes instances of relations as input and yields instances of relations as output. 
+-> It uses operators to perform queries. 
+-> An operator can be either unary or binary. 
+-> They accept relations as their input and yield relations as their output. 
+-> Relational algebra is performed recursively on a relation and intermediate results are also considered relations.
+
+
+The fundamental operations of relational algebra are as follows:
+ Select
+ Project
+ Union
+ Set different
+ Cartesian product
+ Rename
+
+
+
+Select Operation (σ)
+
+-> It selects tuples that satisfy the given predicate from a relation.
+
+Notation: σp(r)
+
+Where σ stands for selection predicate and r stands for relation. 
+
+-> p is prepositional logic formula which may use connectors like and, or, and not. 
+
+-> These terms may use relational operators like: =, ≠, ≥, <, >, ≤.
+For example:
+σsubject="database"(Books)
+Output: Selects tuples from books where subject is 'database'.
+
+σsubject="database" and price="450"(Books)
+Output: Selects tuples from books where subject is 'database' and 'price' is 450.
+
+σsubject="database" and price < "450" or year > "2010"(Books)
+Output: Selects tuples from books where subject is 'database' and 'price' is 450 or those books published after 2010.
+
+
+
+
+Project Operation (∏)
+-> It projects column(s) that satisfy a given predicate.
+
+Notation: ∏A1, A2, An (r)
+Where A1, A2, An are attribute names of relation r.
+
+-> Duplicate rows are automatically eliminated, as relation is a set.
+For example:
+∏subject, author (Books)
+
+-> Selects and projects columns named as subject and author from the relation Books.
+
+
+
+
+Union Operation (∪)
+-> It performs binary union between two given relations and is defined as:
+r ∪ s = { t | t ∈ r or t ∈ s}
+
+Notion: r U s
+
+Where r and s are either database relations or relation result set (temporary relation).
+
+->For a union operation to be valid, the following conditions must hold:
+ r and s must have the same number of attributes.
+ Attribute domains must be compatible.
+ Duplicate tuples are automatically eliminated.
+
+∏ author (Books) ∪ ∏ author (Articles)
+
+Output: Projects the names of the authors who have either written a book or an article or both.
 
 
 
 
 
+Set Difference (−)
+
+-> The result of set difference operation is tuples, which are present in one relation but are not in the second relation.
+
+Notation: r − s
+
+Finds all the tuples that are present in r but not in s.
+
+∏author(Books) − ∏author(Articles)
+Output: Provides the name of authors who have written books but not articles.
 
 
 
+
+Cartesian Product (Χ)
+
+-> Combines information of two different relations into one.
+Notation: r Χ s
+
+Where r and s are relations and their output will be defined as:
+
+r Χ s = { q t | q ∈ r and t ∈ s}
+
+∏author = 'tutorialspoint'(Books Χ Articles)
+
+Output: Yields a relation, which shows all the books and articles written by tutorialspoint.
+
+
+
+
+Rename Operation (ρ)
+-> The results of relational algebra are also relations but without any name. 
+-> The rename operation allows us to rename the output relation. ‘rename’ operation is denoted with small Greek letter rho ρ.
+
+
+Notation: ρ x (E)
+Where the result of expression E is saved with name of x.
+
+Additional operations are:
+ Set intersection
+ Assignment
+ Natural join
+
+
+
+Relational Calculus:
+
+-> In contrast to Relational Algebra, Relational Calculus is a non-procedural query language, that is, it tells what to do but never explains how to do it.
+
+
+Relational calculus exists in two forms:
+
+
+Tuple Relational Calculus (TRC):
+
+Filtering variable ranges over tuples
+
+Notation: {T | Condition}
+
+Returns all tuples T that satisfies a condition.
+
+
+For example:
+{ T.name | Author(T) AND T.article = 'database' }
+
+Output: Returns tuples with 'name' from Author who has written article on 
+'database'.
+
+TRC can be quantified. We can use Existential (∃) and Universal Quantifiers (∀).
+
+For example:
+{ R| ∃T ∈ Authors(T.article='database' AND R.name=T.name)}
+
+Output: The above query will yield the same result as the previous one.
+
+
+
+
+Domain Relational Calculus (DRC):
+
+-> In DRC, the filtering variable uses the domain of attributes instead of entire tuple values (as done in TRC, mentioned above).
+
+Notation:
+{ a1, a2, a3, ..., an | P (a1, a2, a3, ... ,an)}
+Where a1, a2 are attributes and P stands for formulae built by inner attributes.
+
+For example:
+{< article, page, subject > | ∈ TutorialsPoint ∧ subject = 'database'}
+
+Output: Yields Article, Page, and Subject from the relation TutorialsPoint, where subject is database.
+
+
+-> Just like TRC, DRC can also be written using existential and universal quantifiers. 
+
+DRC also involves relational operators.
+
+The expression power of Tuple Relation Calculus and Domain Relation Calculus is equivalent to Relational Algebra.
 
 
 
