@@ -959,39 +959,786 @@ The expression power of Tuple Relation Calculus and Domain Relation Calculus is 
 
 
 
+ER MODEL TO RELATIONAL MODEL:
+
+-> ER Model, when conceptualized into diagrams, gives a good overview of entity-relationship, which is easier to understand. 
+-> ER diagrams can be mapped to relational schema, that is, it is possible to create relational schema using ER diagram. 
+-> We cannot import all the ER constraints into relational model, but an approximate schema can be generated.
+
+
+-> There are several processes and algorithms available to convert ER Diagrams into Relational Schema. 
+
+-> Some of them are automated and some of them are manual. 
+
+-> We may focus here on the mapping diagram contents to relational basics.
+
+
+
+ER diagrams mainly comprise of:
+ Entity and its attributes
+ Relationship, which is association among entities
 
 
 
 
+Mapping Entity:
+
+-> An entity is a real-world object with some attributes.
+
+
+Mapping Process (Algorithm):
+ Create table for each entity.
+ Entity's attributes should become fields of tables with their respective data types.
+ Declare primary key.
+
+
+
+Mapping Relationship:
+
+-> A relationship is an association among entities.
+
+
+
+Mapping Process:
+ Create table for a relationship.
+ Add the primary keys of all participating Entities as fields of table with their respective data types.
+ If relationship has any attribute, add each attribute as field of table.
+ Declare a primary key composing all the primary keys of participating entities.
+ Declare all foreign key constraints.
+
+
+
+Mapping Weak Entity Sets:
+
+-> A weak entity set is one which does not have any primary key associated with it.
+
+
+Mapping Process:
+ Create table for weak entity set.
+ Add all its attributes to table as field.
+ Add the primary key of identifying entity set.
+ Declare all foreign key constraints.
+
+
+
+Mapping Hierarchical Entities:
+
+-> ER specialization or generalization comes in the form of hierarchical entity sets.
+
+
+
+Mapping Process:
+
+ Create tables for all higher-level entities.
+ Create tables for lower-level entities.
+ Add primary keys of higher-level entities in the table of lower-level entities.
+ In lower-level tables, add all other attributes of lower-level entities.
+ Declare primary key of higher-level table and the primary key for lower-level table.
+ Declare foreign key constraints.
+
+
+
+SQL OVERVIEW:
+
+-> SQL is a programming language for Relational Databases. 
+-> It is designed over relational algebra and tuple relational calculus. 
+-> SQL comes as a package with all major distributions of RDBMS.
+
+-> SQL comprises both data definition and data manipulation languages. 
+-> Using the data definition properties of SQL, one can design and modify database schema,
+        whereas data manipulation properties allows SQL to store and retrieve data from database.
+
+
+
+Data Definition Language:
+
+SQL uses the following set of commands to define database schema:
+
+CREATE:
+Creates new databases, tables, and views from RDBMS.
+
+
+For example:
+Create database tutorialspoint;
+Create table article;
+Create view for_students;
+
+
+
+DROP:
+Drops commands, views, tables, and databases from RDBMS.
+
+For example:
+Drop object_type object_name;
+Drop database tutorialspoint;
+Drop table article;
+Drop view for_students;
 
 
 
 
+ALTER:
+Modifies database schema.
+Alter object_type object_name parameters;
+
+
+For example:
+Alter table article add subject varchar;
+
+-> This command adds an attribute in the relation article with the name subject of string type.
 
 
 
 
+Data Manipulation Language:
+
+-> SQL is equipped with data manipulation language (DML). 
+-> DML modifies the database instance by inserting, updating, and deleting its data. 
+-> DML is responsible for all forms data modification in a database. 
+
+SQL contains the following set of commands in its DML section:
+ SELECT/FROM/WHERE
+ INSERT INTO/VALUES
+ UPDATE/SET/WHERE
+ DELETE FROM/WHERE
+
+
+-> These basic constructs allow database programmers and users to enter data and information into the database 
+        and retrieve efficiently using a number of filter options.
 
 
 
 
+SELECT/FROM/WHERE:
+
+ SELECT
+-> This is one of the fundamental query command of SQL. 
+-> It is similar to the projection operation of relational algebra. 
+-> It selects the attributes based on the condition described by WHERE clause.
+
+
+ FROM
+-> This clause takes a relation name as an argument from which attributes are to be selected/projected. 
+-> In case more than one relation names are given, this clause corresponds to Cartesian product.
+
+
+ WHERE
+-> This clause defines predicate or conditions, which must match in order to qualify the attributes to be projected.
+
+For example:
+Select author_name
+From book_author
+Where age > 50;
+
+
+-> This command will yield the names of authors from the relation book_author whose age is greater than 50.
+
+
+
+INSERT INTO/VALUES:
+
+-> This command is used for inserting values into the rows of a table (relation).
+
+
+Syntax:
+INSERT INTO table (column1 [, column2, column3 ... ]) VALUES (value1 [,value2, value3 ... ])
+
+Or
+INSERT INTO table VALUES (value1, [value2, ... ])
+
+For example:
+INSERT INTO tutorialspoint (Author, Subject) VALUES ("anonymous","computers");
+
+
+
+UPDATE/SET/WHERE:
+
+-> This command is used for updating or modifying the values of columns in a table (relation).
+
+Syntax:
+UPDATE table_name SET column_name = value [, column_name = value ...]
+[WHERE condition]
+
+
+For example:
+UPDATE tutorialspoint SET Author="webmaster" WHERE Author="anonymous";
 
 
 
 
+DELETE/FROM/WHERE:
+
+-> This command is used for removing one or more rows from a table (relation).
+
+Syntax:
+DELETE FROM table_name [WHERE condition];
+
+
+For example:
+DELETE FROM tutorialspoint
+ WHERE Author="unknown";
 
 
 
 
+NORMALIZATION:
+
+Functional Dependency:
+
+-> Functional dependency (FD) is a set of constraints between two attributes in a relation. 
+-> Functional dependency says that if two tuples have same values for attributes A1, A2,..., An, 
+        then those two tuples must have to have same values for attributes B1, B2, ..., Bn.
+
+-> Functional dependency is represented by an arrow sign (→) that is, X→Y, where X functionally determines Y. 
+-> The left-hand side attributes determine the values of attributes on the right-hand side.
 
 
 
 
+Armstrong's Axioms:
+
+-> If F is a set of functional dependencies then the closure of F, denoted as F+, is the set of all functional dependencies logically implied by F. 
+
+-> Armstrong's Axioms are a set of rules that, when applied repeatedly, generates a closure of functional dependencies.
+ Reflexive rule: 
+-> If alpha is a set of attributes and beta is_subset_of alpha, then alpha holds beta.
+
+ Augmentation rule: 
+-> If a → b holds and y is attribute set, then ay → by also holds. 
+-> That is adding attributes in dependencies, does not change the basic dependencies.
+
+ Transitivity rule: 
+-> Same as transitive rule in algebra, if a → b holds and b → c holds, then a → c also holds. 
+-> a → b is called as a functionally that determines b.
+
+
+
+Trivial Functional Dependency:
+
+ Trivial: 
+-> If a functional dependency (FD) X → Y holds, where Y is a subset of X, then it is called a trivial FD. 
+-> Trivial FDs always hold.
+
+ Non-trivial: 
+-> If an FD X → Y holds, where Y is not a subset of X, then it is called a non-trivial FD.
+
+ Completely non-trivial: 
+-> If an FD X → Y holds, where x intersect Y = Φ, it is said to be a completely non-trivial FD.
 
 
 
 
+Normalization:
 
+-> If a database design is not perfect, it may contain anomalies, which are like a bad dream for any database administrator. 
+-> Managing a database with anomalies is next to impossible.
+
+ Update anomalies: 
+-> If data items are scattered and are not linked to each other properly, then it could lead to strange situations. 
+
+For example, 
+-> when we try to update one data item having its copies scattered over several places, 
+        a few instances get updated properly while a few others are left with old values. 
+-> Such instances leave the database in an inconsistent state.
+
+
+ Deletion anomalies: 
+-> We tried to delete a record, but parts of it was left undeleted because of unawareness, the data is also saved somewhere else.
+
+
+ Insert anomalies: 
+-> We tried to insert data in a record that does not exist at all.
+
+Notes:
+-> Normalization is a method to remove all these anomalies and bring the database to a consistent state.
+
+
+
+First Normal Form:
+
+-> First Normal Form is defined in the definition of relations (tables) itself. 
+-> This rule defines that all the attributes in a relation must have atomic domains. 
+-> The values in an atomic domain are indivisible units.
+
+-> Each attribute must contain only a single value from its predefined domain.
+
+
+
+
+Second Normal Form:
+
+-> Before we learn about the second normal form, we need to understand the following:
+
+ Prime attribute: 
+-> An attribute, which is a part of the prime-key, is known as a prime attribute.
+
+
+ Non-prime attribute: 
+-> An attribute, which is not a part of the prime-key, is said to be a non-prime attribute.
+
+
+-> If we follow second normal form, then every non-prime attribute should be fully functionally dependent on prime key attribute. 
+-> That is, if X → A holds, then there should not be any proper subset Y of X for which Y → A also holds true.
+
+
+-> We see here in Student_Project relation that the prime key attributes are Stu_ID and Proj_ID. 
+
+-> According to the rule, non-key attributes, i.e., Stu_Name and Proj_Name must be dependent upon both and not on any of the prime key attribute individually. 
+-> But we find that Stu_Name can be identified by Stu_ID and Proj_Name can be identified by Proj_ID independently. 
+-> This is called partial dependency, which is not allowed in Second Normal Form.
+
+
+
+
+Third Normal Form:
+
+-> For a relation to be in Third Normal Form, it must be in Second Normal form and the following must satisfy:
+
+ No non-prime attribute is transitively dependent on prime key attribute.
+ For any non-trivial functional dependency, X → A, then either:
+o X is a superkey or,
+o A is prime attribute.
+
+
+
+-> We find that in the above Student_detail relation, Stu_ID is the key and only prime key attribute. 
+-> We find that City can be identified by Stu_ID as well as Zip itself. 
+-> Neither Zip is a superkey nor is City a prime attribute. 
+-> Additionally, Stu_ID → Zip → City, so there exists transitive dependency.
+
+
+
+
+Boyce-Codd Normal Form:
+
+-> Boyce-Codd Normal Form (BCNF) is an extension of Third Normal Form on strict terms. 
+
+BCNF states that -
+ For any non-trivial functional dependency, X → A, X must be a super-key.
+
+
+-> In the above image, Stu_ID is the super-key in the relation Student_Detail and Zip is the super-key in the relation ZipCodes. 
+
+-> So,
+Stu_ID → Stu_Name, Zip
+and
+Zip → City
+Which confirms that both the relations are in BCNF.
+
+
+
+
+JOINS:
+
+-> We understand the benefits of taking a Cartesian product of two relations, which gives us all the possible tuples that are paired together. 
+-> But it might not be feasible for us in certain cases to take a Cartesian product 
+        where we encounter huge relations with thousands of tuples having a considerable large number of attributes.
+        
+        
+-> Join is a combination of a Cartesian product followed by a selection process. 
+-> A Join operation pairs two tuples from different relations, if and only if a given join condition is satisfied.
+
+
+
+
+Theta (θ) Join:
+
+-> Theta join combines tuples from different relations provided they satisfy the theta condition. 
+-> The join condition is denoted by the symbol θ.
+
+
+Notation:
+R1 ⋈θ R2
+
+-> R1 and R2 are relations having attributes (A1, A2, .., An) and (B1, B2,.. ,Bn) such that the attributes don’t have anything in common, that is, R1 ∩ R2 = Φ.
+
+-> Theta join can use all kinds of comparison operators.
+
+
+Student:
+
+SID     Name     Std
+101     Alex     10
+102     Maria    11
+
+
+
+Subjects:
+
+Class    Subject
+10       Math
+10       English
+11       Music
+11       Sports
+
+
+
+
+Student_Detail = STUDENT ⋈Student.Std = Subject.Class SUBJECT
+
+
+Student_detail
+
+SID     Name     Std     Class    Subject
+101     Alex     10      10       Math
+101     Alex     10      10       English
+102     Maria    11      11       Music
+102     Maria    11      11       Sports
+
+
+
+Equijoin:
+
+-> When Theta join uses only equality comparison operator, it is said to be equijoin. 
+-> The above example corresponds to equijoin.
+
+
+Natural Join (⋈)
+
+-> Natural join does not use any comparison operator. 
+-> It does not concatenate the way a Cartesian product does. 
+-> We can perform a Natural Join only if there is at least one common attribute that exists between two relations. 
+-> In addition, the attributes must have the same name and domain.
+
+
+-> Natural join acts on those matching attributes where the values of attributes in both the relations are same.
+
+
+Courses:
+
+CID      Course         Dept
+CS01     Database       CS
+ME01     Mechanics      ME
+EE01     Electronics    EE
+
+
+HoD:
+
+Dept     Head
+CS       Alex
+ME       Maya
+EE       Mira
+
+
+
+Courses ⋈ HoD:
+
+Dept    CID      Course       Head
+CS      CS01     Database     Alex
+ME      ME01     Mechanics    Maya
+EE      EE01     Electronics  Mira
+
+
+
+
+Outer Joins:
+
+-> Theta Join, Equijoin, and Natural Join are called inner joins. 
+-> An inner join includes only those tuples with matching attributes and the rest are discarded in the resulting relation. 
+
+-> Therefore, we need to use outer joins to include all the tuples from the participating relations in the resulting relation. 
+
+-> There are three kinds of outer joins: left outer join, right outer join, and full outer join.
+
+
+
+
+Left Outer Join:
+
+-> All the tuples from the Left relation, R, are included in the resulting relation. 
+-> If there are tuples in R without any matching tuple in the Right relation S, then the S-attributes of the resulting relation are made NULL.
+
+
+Left:
+
+A       B
+100     Database
+101     Mechanics
+102     Electronics
+
+
+Right:
+
+A       B
+100     Alex
+102     Maya
+104     Mira
+
+
+
+Courses HoD:
+
+A        B               C       D
+100      Database       100      Alex
+101      Mechanics      ---      ---
+102      Electronics    102      Maya
+
+
+
+Right Outer Join:
+
+-> All the tuples from the Right relation, S, are included in the resulting relation. 
+-> If there are tuples in S without any matching tuple in R, then the R-attributes of resulting relation are made NULL.
+
+
+Courses HoD
+A        B            C       D
+100      Database     100     Alex
+102      Electronics  102     Maya
+---      ---          104     Mira
+
+
+
+Full Outer Join:
+
+-> All the tuples from both participating relations are included in the resulting relation. 
+-> If there are no matching tuples for both relations, their respective unmatched attributes are made NULL.
+
+
+Courses HoD:
+A       B           C        D
+100     Database    100      Alex
+101     Mechanics   ---      ---
+102     Electronics 102      Maya
+---     ---         104      Mira
+
+
+
+STORAGE SYSTEM:
+
+-> Databases are stored in file formats, which contain records. 
+-> At physical level, the actual data is stored in electromagnetic format on some device. 
+
+
+-> These storage devices can be broadly categorized into three types:
+
+High Capacity -> Tertiary Memory > Seondary Memory > Primary Memory
+High Speed    -> Primary Memory > Secondary Memory > Tertiary Memory
+
+
+
+ Primary Storage: 
+-> The memory storage that is directly accessible to the CPU comes under this category. 
+-> CPU's internal memory (registers), fast memory (cache), and main memory (RAM) are directly accessible to the CPU, 
+        as they are all placed on the motherboard or CPU chipset. 
+-> This storage is typically very small, ultra-fast, and volatile. 
+-> Primary storage requires continuous power supply in order to maintain its state. 
+-> In case of a power failure, all its data is lost.
+
+
+ Secondary Storage: 
+-> Secondary storage devices are used to store data for future use or as backup. 
+-> Secondary storage includes memory devicesthat are not a part of the CPU chipset or motherboard, 
+-> for example, magnetic disks, optical disks (DVD, CD, etc.), hard disks, flash drives, and magnetic tapes.
+
+
+ Tertiary Storage: 
+-> Tertiary storage is used to store huge volumes of data. 
+-> Since such storage devices are external to the computer system, they are the slowest in speed. 
+-> These storage devices are mostly used to take the back up of an entire system. 
+-> Optical disks and magnetic tapes are widely used as tertiary storage.
+
+
+
+
+Memory Hierarchy:
+
+-> A computer system has a well-defined hierarchy of memory. 
+-> A CPU has direct access to it main memory as well as its inbuilt registers. 
+
+-> The access time of the main memory is obviously less than the CPU speed. 
+-> To minimize this speed mismatch, cache memory is introduced. 
+
+-> Cache memory provides the fastest access time and it contains data that is most frequently accessed by the CPU. 
+-> The memory with the fastest access is the costliest one. 
+
+-> Larger storage devices offer slow speed and they are less expensive, however they can store huge volumes of data as compared to CPU registers or cache memory.
+
+
+
+
+Magnetic Disks:
+
+-> Hard disk drives are the most common secondary storage devices in present computer systems. 
+-> These are called magnetic disks because they use the concept of magnetization to store information. 
+
+-> Hard disks consist of metal disks coated with magnetizable material. 
+-> These disks are placed vertically on a spindle. 
+-> A read/write head moves in between the disks and is used to magnetize or de-magnetize the spot under it. 
+
+-> A magnetized spot can be recognized as 0 (zero) or 1 (one).
+-> Hard disks are formatted in a well-defined order to store data efficiently. 
+
+-> A hard disk plate has many concentric circles on it, called tracks. 
+-> Every track is further divided into sectors. 
+-> A sector on a hard disk typically stores 512 bytes of data.
+
+
+
+RAID:
+
+-> RAID stands for Redundant Array of Independent Disks, which is a technology to connect multiple secondary storage devices and use them as a single storage media.
+-> RAID consists of an array of disks in which multiple disks are connected together to achieve different goals. 
+-> RAID levels define the use of disk arrays.
+
+
+ RAID 0: 
+-> In this level, a striped array of disks is implemented. 
+-> The data is broken down into blocks and the blocks are distributed among disks. 
+-> Each disk receives a block of data to write/read in parallel. 
+-> It enhances the speed and performance of the storage device. 
+-> There is no parity and backup in Level 0.
+
+
+
+ RAID 1: 
+-> RAID 1 uses mirroring techniques. When data is sent to a RAID controller, it sends a copy of data to all the disks in the array. 
+-> RAID level 1 is also called mirroring and provides 100% redundancy in case of a failure. 
+
+
+
+ RAID 2: 
+-> RAID 2 records Error Correction Code using Hamming distance for its data, striped on different disks. 
+-> Like level 0, each data bit in a word is recorded on a separate disk and ECC codes of the data words are stored on a different set disks. 
+-> Due to its complex structure and high cost, RAID 2 is not commercially available.
+
+
+
+ RAID 3: 
+-> RAID 3 stripes the data onto multiple disks. 
+-> The parity bit generated for data word is stored on a different disk. 
+-> This technique makes it to overcome single disk failures.
+
+
+ RAID 4: 
+-> In this level, an entire block of data is written onto data disks and then the parity is generated and stored on a different disk. 
+-> Note that level 3 uses byte-level striping, whereas level 4 uses block-level striping. 
+-> Both level 3 and level 4 require at least three disks to implement RAID.
+
+
+
+ RAID 5: 
+-> RAID 5 writes whole data blocks onto different disks, but the parity bits generated for data block stripe are distributed among all the 
+        data disks rather than storing them on a different dedicated disk. 
+
+
+ RAID 6: 
+-> RAID 6 is an extension of level 5. 
+-> In this level, two independent parities are generated and stored in distributed fashion among multiple disks. 
+-> Two parities provide additional fault tolerance. 
+-> This level requires at least four disk drives to implement RAID.
+
+
+
+FILE STRUCTURE:
+
+
+-> Relative data and information is stored collectively in file formats. 
+-> A file is a sequence of records stored in binary format. 
+-> A disk drive is formatted into several blocks that can store records. 
+-> File records are mapped onto those disk blocks.
+
+
+File Organization:
+
+-> File Organization defines how file records are mapped onto disk blocks. 
+
+
+-> We have four types of File Organization to organize file records: 
+1. Heap File Organization
+2. Sequential File Organization
+3. Hash File Organization
+4. Clustered File Organization
+
+
+
+
+Heap File Organization:
+
+-> When a file is created using Heap File Organization, the Operating System allocates memory area to that file without any further accounting details. 
+-> File records can be placed anywhere in that memory area. 
+-> It is the responsibility of the software to manage the records. 
+-> Heap File does not support any ordering, sequencing, or indexing on its own.
+
+
+
+Sequential File Organization:
+
+-> Every file record contains a data field (attribute) to uniquely identify that record. 
+-> In sequential file organization, records are placed in the file in some sequential order based on the unique key field or search key. 
+-> Practically, it is not possible to store all the records sequentially in physical form.
+
+
+
+Hash File Organization:
+
+-> Hash File Organization uses Hash function computation on some fields of the records. 
+-> The output of the hash function determines the location of disk block where the records are to be placed.
+
+
+
+Clustered File Organization:
+
+-> Clustered file organization is not considered good for large databases. 
+-> In this mechanism, related records from one or more relations are kept in the same disk block, 
+        that is, the ordering of records is not based on primary key or search key. 
+
+
+
+
+File Operations:
+
+Operations on database files can be broadly classified into two categories:
+ Update Operations
+ Retrieval Operations
+
+
+-> Update operations change the data values by insertion, deletion, or update. 
+-> Retrieval operations, on the other hand, do not alter the data but retrieve them after optional conditional filtering. 
+
+-> In both types of operations, selection plays a significant role. 
+-> Other than creation and deletion of a file, there could be several operations, which can be done on files.
+
+
+ Open: 
+-> A file can be opened in one of the two modes, read mode or write mode. 
+-> In read mode, the operating system does not allow anyone to alter data. 
+-> In other words, data is read only. 
+
+-> Files opened in read mode can be shared among several entities. 
+-> Write mode allows data modification. 
+-> Files opened in write mode can be read but cannot be shared.
+
+
+ Locate: 
+-> Every file has a file pointer, which tells the current position where the data is to be read or written. 
+-> This pointer can be adjusted accordingly. 
+-> Using find (seek) operation, it can be moved forward or backward.
+
+
+ Read: 
+-> By default, when files are opened in read mode, the file pointer points to the beginning of the file. 
+-> There are options where the user can tell the operating system where to locate the file pointer at the time of opening a file. 
+-> The very next data to the file pointer is read.
+
+
+
+ Write: 
+-> User can select to open a file in write mode, which enables them to edit its contents. 
+-> It can be deletion, insertion, or modification. 
+-> The file pointer can be located at the time of opening or can be dynamically changed if the operating system allows to do so.
+
+
+ Close: 
+-> This is the most important operation from the operating system’s point of view. 
+-> When a request to close a file is generated, the operating system
+o removes all the locks (if in shared mode),
+o saves the data (if altered) to the secondary storage media, and 
+o releases all the buffers and file handlers associated with the file.
+
+
+-> The organization of data inside a file plays a major role here. 
+-> The process to locate the file pointer to a desired record inside a file various based on whether the records are arranged sequentially or clustered.
 
 
 
